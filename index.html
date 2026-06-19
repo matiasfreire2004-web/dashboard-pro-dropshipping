@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Pro - Dropshipping Analytics</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo">
+            <i class="fas fa-chart-line"></i>
+            <span>Dropship Pro</span>
+        </div>
+        
+        <nav class="nav">
+            <a href="#overview" class="nav-item active" data-section="overview">
+                <i class="fas fa-home"></i>
+                <span>Overview</span>
+            </a>
+            <a href="#productos" class="nav-item" data-section="productos">
+                <i class="fas fa-box"></i>
+                <span>Productos</span>
+            </a>
+            <a href="#conversion" class="nav-item" data-section="conversion">
+                <i class="fas fa-funnel-dollar"></i>
+                <span>Conversión</span>
+            </a>
+            <a href="#ads" class="nav-item" data-section="ads">
+                <i class="fas fa-bullhorn"></i>
+                <span>Publicidad</span>
+            </a>
+            <a href="#input" class="nav-item" data-section="input">
+                <i class="fas fa-plus-circle"></i>
+                <span>Cargar Datos</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <div class="avatar">M</div>
+                <div class="user-details">
+                    <span class="user-name">Matías</span>
+                    <span class="user-role">Admin</span>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <h1 id="section-title">Overview</h1>
+                <p class="header-subtitle">Dashboard de rendimiento en tiempo real</p>
+            </div>
+            <div class="header-right">
+                <button class="btn-icon" id="refreshBtn" onclick="refreshData()">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+                <div class="date-selector">
+                    <i class="fas fa-calendar"></i>
+                    <span id="currentMonth">Junio 2026</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Overview Section -->
+        <section id="overview" class="section active">
+            <!-- KPI Cards -->
+            <div class="kpi-grid">
+                <div class="kpi-card primary">
+                    <div class="kpi-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <div class="kpi-content">
+                        <span class="kpi-label">Ganancia Neta</span>
+                        <h2 class="kpi-value" id="gananciaTotal">$2,187.97</h2>
+                        <span class="kpi-change positive">
+                            <i class="fas fa-arrow-up"></i> 13.7% este mes
+                        </span>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <div class="kpi-content">
+                        <span class="kpi-label">Pedidos Confirmados</span>
+                        <h2 class="kpi-value" id="pedidosConfirmados">320</h2>
+                        <span class="kpi-change positive">
+                            <i class="fas fa-arrow-up"></i> 25% conversión
+                        </span>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-icon">
+                        <i class="fas fa-percentage"></i>
+                    </div>
+                    <div class="kpi-content">
+                        <span class="kpi-label">Tasa Confirmación</span>
+                        <h2 class="kpi-value" id="tasaConfirmacion">80%</h2>
+                        <span class="kpi-change neutral">
+                            <i class="fas fa-minus"></i> vs 75% anterior
+                        </span>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="kpi-content">
+                        <span class="kpi-label">ROAS</span>
+                        <h2 class="kpi-value" id="roas">2.8x</h2>
+                        <span class="kpi-change positive">
+                            <i class="fas fa-arrow-up"></i> Rentable
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Row -->
+            <div class="charts-row">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Embudo de Conversión</h3>
+                        <button class="btn-icon-sm">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </button>
+                    </div>
+                    <canvas id="funnelChart"></canvas>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Inversión Publicitaria</h3>
+                        <button class="btn-icon-sm">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </button>
+                    </div>
+                    <div class="ads-breakdown">
+                        <div class="ad-platform">
+                            <div class="platform-info">
+                                <i class="fab fa-tiktok"></i>
+                                <span>TikTok Ads</span>
+                            </div>
+                            <div class="platform-stats">
+                                <span class="amount">$127.72</span>
+                                <div class="progress-bar">
+                                    <div class="progress-fill tiktok" style="width: 56%"></div>
+                                </div>
+                                <span class="percentage">56%</span>
+                            </div>
+                        </div>
+                        <div class="ad-platform">
+                            <div class="platform-info">
+                                <i class="fab fa-facebook"></i>
+                                <span>Meta Ads</span>
+                            </div>
+                            <div class="platform-stats">
+                                <span class="amount">$100.00</span>
+                                <div class="progress-bar">
+                                    <div class="progress-fill meta" style="width: 44%"></div>
+                                </div>
+                                <span class="percentage">44%</span>
+                            </div>
+                        </div>
+                        <div class="total-ads">
+                            <span>Total Invertido</span>
+                            <h3>$227.72</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Productos Top -->
+            <div class="table-card">
+                <div class="table-header">
+                    <h3>Top Productos Este Mes</h3>
+                    <a href="#productos" class="btn-link">Ver todos →</a>
+                </div>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Confirmados</th>
+                            <th>Entregados</th>
+                            <th>% Entrega</th>
+                            <th>Ganancia</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="topProductos">
+                        <tr>
+                            <td>
+                                <div class="product-cell">
+                                    <div class="product-avatar">S</div>
+                                    <span>SHILAJIT</span>
+                                </div>
+                            </td>
+                            <td>24</td>
+                            <td>15</td>
+                            <td><span class="badge success">62.5%</span></td>
+                            <td class="amount">$227.72</td>
+                            <td><span class="status-dot active"></span> Activo</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="product-cell">
+                                    <div class="product-avatar">N</div>
+                                    <span>NIÑ@</span>
+                                </div>
+                            </td>
+                            <td>8</td>
+                            <td>24</td>
+                            <td><span class="badge warning">33.3%</span></td>
+                            <td class="amount">-$16.83</td>
+                            <td><span class="status-dot paused"></span> En pausa</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Productos Section -->
+        <section id="productos" class="section">
+            <div class="section-header">
+                <h2>Análisis por Producto</h2>
+                <button class="btn-primary" onclick="showAddProduct()">
+                    <i class="fas fa-plus"></i> Nuevo Producto
+                </button>
+            </div>
+
+            <div class="products-grid" id="productsGrid">
+                <!-- Cards de productos generados dinámicamente -->
+            </div>
+        </section>
+
+        <!-- Conversión Section -->
+        <section id="conversion" class="section">
+            <div class="section-header">
+                <h2>Embudo de Conversión</h2>
+            </div>
+
+            <div class="conversion-flow">
+                <div class="conversion-stage">
+                    <div class="stage-icon">
+                        <i class="fas fa-mouse-pointer"></i>
+                    </div>
+                    <h3>Pedidos Landing</h3>
+                    <p class="stage-value" id="pedidosShopify">400</p>
+                    <span class="stage-label">Shopify</span>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="conversion-stage">
+                    <div class="stage-icon">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
+                    <h3>Pedidos WhatsApp</h3>
+                    <p class="stage-value" id="pedidosWhatsapp">320</p>
+                    <span class="stage-label">80% contacto</span>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="conversion-stage success">
+                    <div class="stage-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3>Confirmados</h3>
+                    <p class="stage-value" id="pedidosReales">320</p>
+                    <span class="stage-label">100% confirmación</span>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="conversion-stage">
+                    <div class="stage-icon">
+                        <i class="fas fa-shipping-fast"></i>
+                    </div>
+                    <h3>Entregados</h3>
+                    <p class="stage-value" id="pedidosEntregados">256</p>
+                    <span class="stage-label">80% éxito</span>
+                </div>
+            </div>
+
+            <div class="charts-row">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Tasa de Confirmación Diaria</h3>
+                    </div>
+                    <canvas id="confirmacionChart"></canvas>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>% Devolución por Producto</h3>
+                    </div>
+                    <canvas id="devolucionChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ads Section -->
+        <section id="ads" class="section">
+            <div class="section-header">
+                <h2>Performance Publicitaria</h2>
+            </div>
+
+            <div class="ads-comparison">
+                <div class="platform-card tiktok-card">
+                    <div class="platform-header">
+                        <i class="fab fa-tiktok"></i>
+                        <h3>TikTok Ads</h3>
+                    </div>
+                    <div class="platform-metrics">
+                        <div class="metric">
+                            <span class="metric-label">Gastado</span>
+                            <h3>$127.72</h3>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Conversiones</span>
+                            <h3>68</h3>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">CPA</span>
+                            <h3>$1.88</h3>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">ROAS</span>
+                            <h3>3.2x</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="platform-card meta-card">
+                    <div class="platform-header">
+                        <i class="fab fa-facebook"></i>
+                        <h3>Meta Ads</h3>
+                    </div>
+                    <div class="platform-metrics">
+                        <div class="metric">
+                            <span class="metric-label">Gastado</span>
+                            <h3>$100.00</h3>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Conversiones</span>
+                            <h3>52</h3>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">CPA</span>
+                            <h3>$1.92</h3>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">ROAS</span>
+                            <h3>2.4x</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Input Section -->
+        <section id="input" class="section">
+            <div class="section-header">
+                <h2>Cargar Datos del Día</h2>
+                <p class="section-subtitle">Ingresa los números de Dropi para actualizar el dashboard</p>
+            </div>
+
+            <div class="input-grid">
+                <div class="input-card">
+                    <h3><i class="fas fa-shopping-bag"></i> Pedidos</h3>
+                    <form class="input-form" onsubmit="savePedidos(event)">
+                        <div class="form-group">
+                            <label>Pedidos Shopify (Landing)</label>
+                            <input type="number" id="inputShopify" placeholder="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Pedidos Confirmados (Dropi)</label>
+                            <input type="number" id="inputConfirmados" placeholder="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Pedidos Entregados</label>
+                            <input type="number" id="inputEntregados" placeholder="0">
+                        </div>
+                        <button type="submit" class="btn-primary">Guardar Pedidos</button>
+                    </form>
+                </div>
+
+                <div class="input-card">
+                    <h3><i class="fas fa-bullhorn"></i> Publicidad</h3>
+                    <form class="input-form" onsubmit="saveAds(event)">
+                        <div class="form-group">
+                            <label>Gasto TikTok Ads</label>
+                            <input type="number" step="0.01" id="inputTiktok" placeholder="0.00">
+                        </div>
+                        <div class="form-group">
+                            <label>Gasto Meta Ads</label>
+                            <input type="number" step="0.01" id="inputMeta" placeholder="0.00">
+                        </div>
+                        <div class="form-group">
+                            <label>CPA Promedio</label>
+                            <input type="number" step="0.01" id="inputCPA" placeholder="0.00">
+                        </div>
+                        <button type="submit" class="btn-primary">Guardar Publicidad</button>
+                    </form>
+                </div>
+
+                <div class="input-card">
+                    <h3><i class="fas fa-dollar-sign"></i> Costos</h3>
+                    <form class="input-form" onsubmit="saveCostos(event)">
+                        <div class="form-group">
+                            <label>Costo de Producto</label>
+                            <input type="number" step="0.01" id="inputProducto" placeholder="0.00">
+                        </div>
+                        <div class="form-group">
+                            <label>Costo de Flete</label>
+                            <input type="number" step="0.01" id="inputFlete" placeholder="0.00">
+                        </div>
+                        <div class="form-group">
+                            <label>Gastos Admin (mes)</label>
+                            <input type="number" step="0.01" id="inputAdmin" placeholder="0.00">
+                        </div>
+                        <button type="submit" class="btn-primary">Guardar Costos</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
